@@ -8,7 +8,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 
 class CacheHandler(BaseHTTPRequestHandler):
     # 서버가 본문을 바꾸면 같은 URL의 검증자도 함께 바뀐다.
-    body = "캐시 실험 v1".encode("utf-8")
+    body = "캐시 실험 v1".encode()
     policy = "public, max-age=30"
 
     def do_GET(self):
@@ -74,7 +74,7 @@ def main():
         assert headers["Cache-Control"] == "public, max-age=30"
 
         # 실제 제공하는 본문 바이트를 변경한 뒤 이전 ETag로 재검증한다.
-        CacheHandler.body = "변경된 캐시 실험 본문 v2".encode("utf-8")
+        CacheHandler.body = "변경된 캐시 실험 본문 v2".encode()
         status, headers, body = request(original_etag)
         assert status == 200
         assert body == CacheHandler.body and body != original_body
@@ -113,7 +113,10 @@ def main():
         # 브라우저 실험 시 캐시 비활성화 설정과 새로고침 방식도 확인해야 한다.
         print("\n모든 실제 HTTP 요청/응답 검증 통과.")
         print("수동 조건부 요청 실험이며 브라우저 자동 캐시 관찰은 아닙니다.")
-        print("max-age: 신선할 때 재사용 가능; no-cache: 재사용 전 재검증; no-store: 저장 금지.")
+        print(
+            "max-age: 신선할 때 재사용 가능; no-cache: 재사용 전 재검증; "
+            "no-store: 저장 금지."
+        )
     finally:
         server.shutdown()
         thread.join()
