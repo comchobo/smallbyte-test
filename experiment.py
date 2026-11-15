@@ -8,9 +8,8 @@ import http.client
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from threading import Thread
 
-
 RESOURCE = "/message"
-CONTENT = "안녕하세요, HTTP!\n".encode("utf-8")
+CONTENT = "안녕하세요, HTTP!\n".encode()
 
 
 class Handler(BaseHTTPRequestHandler):
