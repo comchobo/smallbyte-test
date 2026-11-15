@@ -78,7 +78,7 @@ def main():
     issued_token = None
 
     def request(label, method, path, expected_status, expected_body, cookie=None):
-        connection = HTTPConnection(*server.server_address, timeout=5)
+        connection = HTTPConnection("127.0.0.1", server.server_port, timeout=5)
         try:
             headers = {} if cookie is None else {"Cookie": cookie}
             connection.request(method, path, headers=headers)
