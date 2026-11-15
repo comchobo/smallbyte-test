@@ -41,7 +41,7 @@ def main():
     server = HTTPServer(("127.0.0.1", 0), CacheHandler)
     thread = threading.Thread(target=server.serve_forever, daemon=True)
     thread.start()
-    host, port = server.server_address
+    host, port = "127.0.0.1", server.server_port
     print(f"실험 URL: http://{host}:{port}/message")
 
     def request(etag=None):
